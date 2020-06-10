@@ -7,10 +7,11 @@ class ControllerBase
   attr_reader :req, :res, :params
 
   # Setup the controller
-  def initialize(req, res)
+  def initialize(req, res, route_params = {})
     # Take in req and res, create ivars to be used later
     @req = req
     @res = res
+    @params = route_params.merge(@req.params)
   end
 
   # Helper method to alias @already_built_response
@@ -29,7 +30,7 @@ class ControllerBase
       @res.status = 302
       @already_built_response = true
       # Call session store to ensure session data stores once repsonse built
-      @session.store_session(@res)
+      session.store_session(@res)
     end
   end
 
@@ -46,7 +47,7 @@ class ControllerBase
       @res.write(content)
       @already_built_response = true
       # Call session store to ensure session data stores once repsonse built
-      @session.store_session(@res)
+      session.store_session(@res)
     end
   end
 
@@ -83,6 +84,8 @@ class ControllerBase
   end
 
   # use this with the router to call action_name (:index, :show, :create...)
-  def invoke_action(name)
+  def invoke_action(action_name)
+    self.send(action_name)
+    render(action_name) unless already_built_response?
   end
 end

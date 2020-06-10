@@ -30,8 +30,12 @@ class Cats2Controller < ControllerBase
   end
 end
 
+# NEw router instantiate when server boots up
 router = Router.new
 router.draw do
+  # Router has GET, POST, PUT, DELETE methods, we are calling some below
+  # Each adds a Route object to the Routers @routes ivar
+  # called with args: path regex, controller name, method name
   get Regexp.new("^/cats$"), Cats2Controller, :index
   get Regexp.new("^/cats/(?<cat_id>\\d+)/statuses$"), StatusesController, :index
 end
