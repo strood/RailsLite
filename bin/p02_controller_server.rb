@@ -1,6 +1,7 @@
 require 'rack'
 require_relative '../lib/controller_base'
 
+# Redirect you to  /cats, then render /cats with given content
 class MyController < ControllerBase
   def go
     if req.path == "/cats"
