@@ -67,7 +67,7 @@ class Router
     # the appropriate controller, and call appropriate method on it
     route = match(req)
     if route
-      route.run
+      route.run(req, res)
     else
       res.status = 404
       res.write("Route Not Found")
