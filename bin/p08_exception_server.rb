@@ -21,7 +21,7 @@ end
 
 class MyController < ControllerBase
   def critical
-    raise "Critical error. Abort, abort, abort"
+    raise "Help, abort abort!"
   end
 
   def dreaded_nil
@@ -29,6 +29,7 @@ class MyController < ControllerBase
   end
 
   def okay
+    # raise "Help abort mission"
     render_content("Everything worked :)", "text/html")
   end
 end

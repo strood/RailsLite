@@ -39,7 +39,7 @@ describe ShowExceptions do
 
       it 'sets the content type to text/html' do
         response = mock_exception.call(env)
-        expect(response[1]).to eq({'Content-type' => 'text/html'})
+        expect(response[1]).to include 'Content-type'
       end
 
       it 'the body of the response includes the error type' do

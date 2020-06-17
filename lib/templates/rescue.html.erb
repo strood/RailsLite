@@ -1,0 +1,44 @@
+<head>
+  <style>
+    h1 {
+      color: red;
+    }
+
+    .error-details {
+      background: grey;
+    }
+
+    .code-preview {
+      width: 80%;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Exception Encountered:</h1>
+  <h2><%=e.class%>: <%=e.message%></h2>
+
+  <section class="error-details">
+    <h3>Error found in file: <%= error_file(e) %></h3>
+    <h3>Line: <%= error_line(e) %></h3>
+    <h3>Method: <%= error_method(e) %></h3>
+  </section>
+
+  <h3>Error preview:</h3>
+  <section class="code-preview">
+    <%  code_preview(e).each do |line| %>
+      <code><%= line %></code>
+      <br>
+    <% end %>
+  </section>
+
+
+  <h3>Stack Trace:</h3>
+  <% e.backtrace.each do |stack_line| %>
+    <%= stack_line %>
+    <br>
+  <% end %>
+
+</body>
