@@ -9,6 +9,7 @@ class ControllerBase
   # Setup the controller
   def initialize(req, res, route_params = {})
     # Take in req and res, create ivars to be used later
+
     @req = req
     @res = res
     @params = route_params.merge(@req.params)

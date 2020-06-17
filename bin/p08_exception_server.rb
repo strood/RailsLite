@@ -29,7 +29,7 @@ class MyController < ControllerBase
   end
 
   def okay
-    # raise "Help abort mission"
+    
     render_content("Everything worked :)", "text/html")
   end
 end

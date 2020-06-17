@@ -7,6 +7,7 @@ class MyController < ControllerBase
   def go
     render_content("Hello from the controller", "text/html")
   end
+
 end
 
 router = Router.new
