@@ -56,6 +56,7 @@ class FileServer
       res.write("Sorry, unable to find any resources under #{file}")
     end
 
+    # Package the res that you get back from above to be passed on.
     res.finish
   end
 

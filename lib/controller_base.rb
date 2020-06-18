@@ -2,6 +2,7 @@ require 'active_support'
 require 'active_support/core_ext'
 require 'erb'
 require_relative './session'
+require_relative './flash'
 
 class ControllerBase
   attr_reader :req, :res, :params
@@ -13,11 +14,13 @@ class ControllerBase
     @req = req
     @res = res
     @params = route_params.merge(@req.params)
+    @already_built_response = false
+    @@protect_from_forgery ||= false
   end
 
   # Helper method to alias @already_built_response
   def already_built_response?
-    return @already_built_response
+    @already_built_response
   end
 
   # Set the response status code and header
@@ -75,18 +78,43 @@ class ControllerBase
           ERB.new(lines).result(binding),
           'text/html'
       )
-
-
   end
 
   # method exposing a `Session` object
   def session
-    @session ||= Session.new(req)
+    @session ||= Session.new(@req)
   end
+
+  # Expose teh flash object
+  def flash
+    @flash ||= Flash.new(@req)
+  end
+
 
   # use this with the router to call action_name (:index, :show, :create...)
   def invoke_action(action_name)
     self.send(action_name)
     render(action_name) unless already_built_response?
   end
+
+  # Allows developer to include the csrf token in their forms, when included will
+  # link the csrf token. When submitted with the form it will verify.
+  def form_authenticity_token
+    @form_authenticity_token
+  end
+
+  protected
+
+  def self.protect_from_forgery
+      @protect_from_forgery = true
+  end
+
+  private
+
+  attr_accessor :already_built_response
+
+  def check_authenticity_token
+
+  end
+
 end
