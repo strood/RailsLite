@@ -68,8 +68,5 @@ class ShowExceptions
 
   end
 
-  def extract_source(source, line)
-
-  end
 
 end

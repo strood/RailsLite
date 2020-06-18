@@ -93,6 +93,11 @@ class ControllerBase
 
   # use this with the router to call action_name (:index, :show, :create...)
   def invoke_action(action_name)
+    if protect_from_forgery? && req.request_method != "GET"
+      check_authenticity_token
+    else
+      form_authenticity_token
+    end
     self.send(action_name)
     render(action_name) unless already_built_response?
   end
@@ -100,13 +105,15 @@ class ControllerBase
   # Allows developer to include the csrf token in their forms, when included will
   # link the csrf token. When submitted with the form it will verify.
   def form_authenticity_token
-    @form_authenticity_token
+    @token ||= generate_authenticity_token
+    res.set_cookie('authenticity_token', value: @token, path: '/')
+    @token
   end
 
   protected
 
   def self.protect_from_forgery
-      @protect_from_forgery = true
+      @@protect_from_forgery = true
   end
 
   private
@@ -114,7 +121,18 @@ class ControllerBase
   attr_accessor :already_built_response
 
   def check_authenticity_token
+    cookie = @req.cookies['authenticity_token']
+    unless cookie && cookie == params['authenticity_token']
+      raise "Invalid authenticity token"
+    end
+  end
 
+  def protect_from_forgery?
+    @@protect_from_forgery
+  end
+
+  def generate_authenticity_token
+    SecureRandom.urlsafe_base64(16)
   end
 
 end
