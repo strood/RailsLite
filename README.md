@@ -20,7 +20,7 @@
 ## Interaction
 
 - Download, then run a server with:
-> $ ruby bin/*server.rb*
+> $ ruby bin/*server name*.rb
 
 - This will start a server at **localhost:3000**
 
