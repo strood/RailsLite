@@ -3,6 +3,8 @@ require_relative '../lib/controller_base'
 require_relative '../lib/router'
 require_relative '../lib/static'
 
+# Served up basic statically rendered content visit at "/"
+
 class MyController < ControllerBase
   def go
     render_content("Hello from the controller", "text/html")

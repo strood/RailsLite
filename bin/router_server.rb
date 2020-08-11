@@ -2,7 +2,7 @@ require 'rack'
 require_relative '../lib/controller_base'
 require_relative '../lib/router'
 
-
+# Our "API" data to be accessed through our router
 $cats = [
   { id: 1, name: "Curie" },
   { id: 2, name: "Markov" }
@@ -14,6 +14,8 @@ $statuses = [
   { id: 3, cat_id: 1, text: "Curie is cool!" }
 ]
 
+# Basic router, only testing GET request below with given paths.
+# Visit "/cats" or "/cats/1/statuses" or "/cats/2/statuses" to be displayed info
 class StatusesController < ControllerBase
   def index
     statuses = $statuses.select do |s|

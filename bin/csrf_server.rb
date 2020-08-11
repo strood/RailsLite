@@ -1,8 +1,12 @@
 require 'rack'
 require_relative '../lib/controller_base.rb'
 require_relative '../lib/router'
+require_relative '../lib/show_exceptions'
 
-# Create an erroneous new dog to test the functionality of your Flash
+
+# To test out CSRF protection, go to the new dog form(/dogs/new) and
+# make sure it works! Alter the form_authenticity_token and see that
+# your server throws an error.
 
 class Dog
   attr_reader :name, :owner
@@ -46,6 +50,8 @@ class Dog
 end
 
 class DogsController < ControllerBase
+  protect_from_forgery
+
   def create
     @dog = Dog.new(params["dog"])
     if @dog.save
@@ -82,6 +88,11 @@ app = Proc.new do |env|
   router.run(req, res)
   res.finish
 end
+
+app = Rack::Builder.new do
+  use ShowExceptions
+  run app
+end.to_app
 
 Rack::Server.start(
  app: app,

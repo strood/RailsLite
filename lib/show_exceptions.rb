@@ -11,10 +11,12 @@ class ShowExceptions
   def call(env)
     # Pass along request to next app in the stack, if rexecption raised, we
     # will catch it in the rescue block below.
-  app.call(env)
-  rescue Exception => e
-    # update response to be better format than 500 Internal Servicve Error
-    render_exception(e)
+    begin
+      app.call(env)
+    rescue Exception => e
+      # update response to be better format than 500 Internal Servicve Error
+      render_exception(e)
+    end
   end
 
   private

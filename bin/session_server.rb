@@ -1,6 +1,7 @@
 require 'rack'
 require_relative '../lib/controller_base'
 
+# Refresh the page("/") to increment the session count variable
 class MyController < ControllerBase
   def go
     session["count"] ||= 0

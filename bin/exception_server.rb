@@ -3,6 +3,8 @@ require_relative '../lib/controller_base'
 require_relative '../lib/router'
 require_relative '../lib/show_exceptions'
 
+# If you visit the permitted paths ("/"" or "/okay"), you will be fine, but bad
+# paths ("/raise" and "nil") will spawn errors on our custom error/debugging page
 class StatusesController < ControllerBase
   def index
     statuses = $statuses.select do |s|
@@ -29,7 +31,7 @@ class MyController < ControllerBase
   end
 
   def okay
-    
+
     render_content("Everything worked :)", "text/html")
   end
 end
