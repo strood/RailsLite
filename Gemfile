@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 6.0.3', '>= 6.0.3.1'
+gem 'rails', '~> 7.0.4'
 gem "rack", ">= 2.2.3"
 gem 'byebug'
 gem 'rspec', '~> 3.1.0'
